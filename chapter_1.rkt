@@ -73,4 +73,41 @@
 
 (cube_root 9)
 
+; 1.9
+
+(+ 4 5)
+(inc (+ 3 5))
+(inc (inc (+ 2 5)))
+(inc (inc (inc (+ 1 5))))
+(inc (inc (inc (inc (+ 0 5)))))
+(inc (inc (inc (inc 5))))
+(inc (inc (inc 6)))
+(inc (inc 7))
+(inc 8)
+9
+;recursive
+
+(+ 4 5)
+(+ 3 6)
+(+ 2 7)
+(+ 1 8)
+(+ 0 9)
+9
+;iterative
+
+; 1.10
+
+(define (A x y)
+  (cond ((= y 0) 0)
+        ((= x 0) (* 2 y))
+        ((= y 1) 2)
+        (else (A (- x 1)
+                 (A x (- y 1))))))
+
+(A 1 10)
+(A 0 (A 1 9))
+(* 2 (A 1 9))
+(* 2 (A 0 (A 1 8)))
+(* 2 (* 2(A 1 8)))
+
 
