@@ -162,3 +162,11 @@
   (if (< n 3) n
       (+ (f (- n 1)) (* 2 (f (- n 2))) (* 3 (f (- n 3)))))
 )
+
+; iterative
+; thoughts:
+; function design: it should save result in a function parameter
+; in certain situation, result should return that parameter.
+; that parameter should change in each iteration
+; question:
+; what parameter should we have ? and how they change in each iteration ???
