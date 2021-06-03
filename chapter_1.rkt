@@ -170,3 +170,10 @@
 ; that parameter should change in each iteration
 ; question:
 ; what parameter should we have ? and how they change in each iteration ???
+
+; maybe like this ?
+; (define f_iter _ _ 0
+;    if n < 3 n
+;            f_iter  _ _ f_iter(***) + f_iter(***) + f_iter(***))
+
+
