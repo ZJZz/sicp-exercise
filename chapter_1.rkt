@@ -85,6 +85,7 @@
 (inc (inc 7))
 (inc 8)
 9
+
 ;recursive
 
 (+ 4 5)
@@ -175,5 +176,19 @@
 ; (define f_iter _ _ 0
 ;    if n < 3 n
 ;            f_iter  _ _ f_iter(***) + f_iter(***) + f_iter(***))
+;   
+; a parameter to record finish condition
+; a parameter to save result
+; a parameter to iterate
+; apply definition change on the parameter change
 
+
+(define (f_iter n result iter)
+  (cond (() )
+        (() )
+        (() )
+        (() )
+        (() )
+  )
+)
 
