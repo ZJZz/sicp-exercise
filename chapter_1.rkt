@@ -159,7 +159,7 @@
 ; 1.11
 
 ; recursive
-(define (f n)
+(define (f_recursive n)
   (if (< n 3) n
       (+ (f (- n 1)) (* 2 (f (- n 2))) (* 3 (f (- n 3)))))
 )
@@ -181,14 +181,21 @@
 ; a parameter to save result
 ; a parameter to iterate
 ; apply definition change on the parameter change
+;
+; After a holiday, I think above is much complicated.
+; It's on the right track, but not touch the key.
+; The key point is think iterative method as for-loop.
+; The same is need i as loop count variable, a variable to save result when loop is end.
+; Then apply the formula in the loop body to transform the intermediate result.
+; The difference is put those in the function parameter.
 
+(define (f_iterative n)
+  (f_iter 2 1 0 n)
+)
 
-(define (f_iter n result iter)
-  (cond (() )
-        (() )
-        (() )
-        (() )
-        (() )
+(define (f_iter a b c i)
+  (if (= i 0) c
+  (f_iter (+ a (* 2 b) (* 3 c)) a b (- i 1)) 
   )
 )
 
