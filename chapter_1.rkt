@@ -211,4 +211,18 @@
   
 )
 
-(define (pascal_triangle_recursive 0 ))
+; since recursive is a kind of top-down view,
+; a suitable way is to think from the last row to the first row,
+; maybe last column also.
+; The process maybe look like this:
+; (define (foo row col)
+;    if( bounday (display 1))
+;    (display (+ (foo row-1 col -1) (foo row-1 col + 1))) 
+; )
+; (foo 2 6)
+; (foo 1 5) (foo 1 7)
+; (foo 0 4) (foor 0 6) (foo 0 6) (foo 0 8)
+
+(define (pascal_triangle_recursive row col)
+
+)
