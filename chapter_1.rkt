@@ -225,10 +225,28 @@
 ; (foo 1 5) (foo 1 7)
 ; (foo 0 4) (foor 0 6) (foo 0 6) (foo 0 8)
 ; 
-; every row right bounday index: 2n - 1 - ( n - row ) = n + row + 1
-; every row left bounday  index: n - row - 1
+; every row right bounday col index: 2n - 1 - ( n - row ) = n + row + 1
+; every row left bounday col index: n - row - 1
 ; every inner element index: even row: odd col odd row: even col
 
-(define (pascal_triangle_recursive row col)
+(define (greater_equal x y)
+  (and (> x y) (= x y))
+)
 
+(define (is_even x)
+  (= (% x 2) 0)
+)
+
+(define (is_odd x)
+  (= (% x 2) 1)
+)
+
+(define (pascal_triangle_recursive row col n)
+  (cond ((and (< col (- (- n row) 1)) (greater_equal col 0) (< row n-1)) (display " "))
+        ((> col (+ (+ n row) 1)) (display "\n"))
+        ((or (= row (+ (+ n row) 1)) (= row ((- (- n row) 1)))) (display 1))
+        ((or (and (is_even row) (is_odd col)) (and (is_odd row) (is_even col))) (display " "))
+        (else ()
+        )
+  )  
 )
