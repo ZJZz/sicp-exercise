@@ -201,14 +201,14 @@
 
 ; 1.12
 ;     [0] [1] [2] [3] [4] [5] [6] [7] [8] 
-; [0]  0   0   0   0   1   0   0   0   0
-; [1]  0   0   0   1   0   1   0   0   0
-; [2]  0   0   1   0   2   0   1   0   0
-; [3]  0   1   0   3   0   3   0   1   0
-; [4]  1   0   4   0   6   0   4   0   1 
+; [0]                  1\n
+; [1]              1       1\n
+; [2]          1       2       1\n  
+; [3]      1       3       3       1\n
+; [4]  1       4       6       4       1\n 
 
 (define (pascal_triangle n)
-  
+  (display )
 )
 
 ; since recursive is a kind of top-down view,
@@ -216,12 +216,18 @@
 ; maybe last column also.
 ; The process maybe look like this:
 ; (define (foo row col)
-;    if( bounday (display 1))
+;    if( on_bounday (1))
+;    if( out_right_bounday ("\n"))
+;    if( inner and before_left_boundary " ")
 ;    (display (+ (foo row-1 col -1) (foo row-1 col + 1))) 
 ; )
 ; (foo 2 6)
 ; (foo 1 5) (foo 1 7)
 ; (foo 0 4) (foor 0 6) (foo 0 6) (foo 0 8)
+; 
+; every row right bounday index: 2n - 1 - ( n - row ) = n + row + 1
+; every row left bounday  index: n - row - 1
+; every inner element index: even row: odd col odd row: even col
 
 (define (pascal_triangle_recursive row col)
 
