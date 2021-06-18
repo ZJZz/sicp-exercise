@@ -207,10 +207,6 @@
 ; [3]      1       3       3       1\n
 ; [4]  1       4       6       4       1\n 
 
-(define (pascal_triangle n)
-  (display )
-)
-
 ; since recursive is a kind of top-down view,
 ; a suitable way is to think from the last row to the first row,
 ; maybe last column also.
@@ -241,12 +237,23 @@
   (= (% x 2) 1)
 )
 
+(define (not_number x)
+  (or (= x " ") (= x "\n"))
+)
+
 (define (pascal_triangle_recursive row col n)
-  (cond ((and (< col (- (- n row) 1)) (greater_equal col 0) (< row n-1)) (display " "))
-        ((> col (+ (+ n row) 1)) (display "\n"))
-        ((or (= row (+ (+ n row) 1)) (= row ((- (- n row) 1)))) (display 1))
-        ((or (and (is_even row) (is_odd col)) (and (is_odd row) (is_even col))) (display " "))
-        (else ()
+  (cond ((and (< col (- (- n row) 1)) (greater_equal col 0) (< row n-1)) " ")
+        ((> col (+ n row 1)) "\n")
+        ((or (= row (+ (+ n row) 1)) (= row ((- (- n row) 1)))) 1)
+        ((or (and (is_even row) (is_odd col)) (and (is_odd row) (is_even col))) " ")
+        (else (cond (and (not_number pascal_triangle_recursive row-1 col-1 n) (not (not_number pascal_triangle_recursive row-1 col+1 n)) (display pascal_triangle_recursive row-1 col+1 n))
+                    (and (not_number pascal_triangle_recursive row-1 col+1 n) (not (not_number pascal_triangle_recursive row-1 col-1 n)) (display (not_number pascal_triangle_recursive row-1 col-1 n))) 
+              ) 
         )
-  )  
+  )
+)  
+
+
+(define (pascal_triangle n)
+(display )
 )
