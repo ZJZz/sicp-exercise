@@ -237,19 +237,16 @@
   (= (% x 2) 1)
 )
 
-(define (not_number x)
-  (or (= x " ") (= x "\n"))
-)
+; we can use index odd and even property to work around string + int situation
+; if a row number index is same with row odd or even. the input element of current number
+; must locat in last row but reverse odd/even index.
 
 (define (pascal_triangle_recursive row col n)
   (cond ((and (< col (- (- n row) 1)) (greater_equal col 0) (< row n-1)) " ")
         ((> col (+ n row 1)) "\n")
         ((or (= row (+ (+ n row) 1)) (= row ((- (- n row) 1)))) 1)
         ((or (and (is_even row) (is_odd col)) (and (is_odd row) (is_even col))) " ")
-        (else (cond (and (not_number pascal_triangle_recursive row-1 col-1 n) (not (not_number pascal_triangle_recursive row-1 col+1 n)) (display pascal_triangle_recursive row-1 col+1 n))
-                    (and (not_number pascal_triangle_recursive row-1 col+1 n) (not (not_number pascal_triangle_recursive row-1 col-1 n)) (display (not_number pascal_triangle_recursive row-1 col-1 n))) 
-              ) 
-        )
+        (else ())
   )
 )  
 
