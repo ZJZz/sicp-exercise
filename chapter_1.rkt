@@ -225,32 +225,68 @@
 ; every row left bounday col index: n - row - 1
 ; every inner element index: even row: odd col odd row: even col
 
-(define (greater_equal x y)
-  (and (> x y) (= x y))
-)
+;(define (greater_equal x y)
+;  (and (> x y) (= x y))
+;)
 
-(define (is_even x)
-  (= (% x 2) 0)
-)
+;(define (is_even x)
+;  (= (% x 2) 0)
+;)
 
-(define (is_odd x)
-  (= (% x 2) 1)
-)
+;(define (is_odd x)
+;  (= (% x 2) 1)
+;)
 
-; we can use index odd and even property to work around string + int situation
+; we can use index odd and even property to bypass string + int situation
 ; if a row number index is same with row odd or even. the input element of current number
 ; must locat in last row but reverse odd/even index.
 
-(define (pascal_triangle_recursive row col n)
-  (cond ((and (< col (- (- n row) 1)) (greater_equal col 0) (< row n-1)) " ")
-        ((> col (+ n row 1)) "\n")
-        ((or (= row (+ (+ n row) 1)) (= row ((- (- n row) 1)))) 1)
-        ((or (and (is_even row) (is_odd col)) (and (is_odd row) (is_even col))) " ")
-        (else ())
+;(define (pascal_triangle_recursive row col n)
+;  (cond ((and (< col (- (- n row) 1)) (greater_equal col 0) (< row n-1)) " ")
+;        ((> col (+ n row 1)) "\n")
+;        ((or (= row (+ (+ n row) 1)) (= row ((- (- n row) 1)))) (display 1))
+;        ((is_even (+ row col)) " ")
+;        (else (cond (is_even (+ row col)) (display (+ (pascal_triangle_recursive row-1 col-1 n) (pascal_triangle_recursive row-1 col+1 n)))
+;              )
+;        )
+;  )
+;)  
+
+;(define (pascal_triangle n)
+;(display )
+;)
+
+; I found it is hard to print the formated pascal triangle with limited 
+; knowledge about racket language right now. For example what value should 
+; return ? number ? or (dispaly x) ? how to traverse the whole col and iter wihtout
+; loop ?
+; After search the solution,
+; the exercise original purpose is just compute the element, not print the whole 
+; triangle. Now, switch to this track, reconsider this problme.
+
+;     [0] [1] [2] [3] [4]
+; [0]  1
+; [1]  1   1
+; [2]  1   2   1
+; [3]  1   3   3   1
+; [4]  1   4   6   4   1
+
+; Now all the return value is number
+
+; the base case is boundary element is 1
+; left bounday is col = 0, right boundary col = row
+
+(define (pascal_triangle_element row col)
+  (if (or (= col 0) (= row col)) 1
+      (+ (pascal_triangle_element (- row 1) col) (pascal_triangle_element (- row 1) (- col 1)))
   )
-)  
-
-
-(define (pascal_triangle n)
-(display )
 )
+
+; go through the process:
+; (foo 3 2)  
+; (+ (foo 2 1) (foo 2 2))
+; (+ (+ (foo 1 0) (foo 1 1)) (foo 2 2))
+; (+ (+ 1 1) 1)
+; (+ 2 1)
+; 3
+; way more easier !
