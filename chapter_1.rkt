@@ -300,8 +300,47 @@
 )
 
 (define (fast-exp b n)
-(cond ((= n 0) 1)
+  (cond ((= n 0) 1)
       ((even? n) (fast-exp-iter b n 1))
       (else (fast-exp-iter b (- n 1) b))   
+  )
 )
+
+; 1.17
+
+(define (double x)
+  (+ x x)
 )
+
+(define (halve x)
+  (/ x 2)
+)
+
+(define (fast-multiply a b)
+  (cond ((= b 0) 0)
+      ((even? b) (double (fast-multiply a (halve b))))
+      (else (+ a (double (fast-multiply a (halve (- b 1))))))   
+  ) 
+)
+
+; 1.18
+
+(define (fast-multiply-iter a b res)
+ (display res)
+ (display "\n")
+ (cond ((= b 1) res)
+       ((even? b) (fast-multiply-iter a (halve b) (+ res (double a))))
+       (else (fast-multiply-iter a (halve (- b 1)) (+ res (double a) a)))
+       )
+)
+
+(define (fast-multiply a b)
+  (cond ((= b 0) 0)
+       ((= b 1) a)
+      ((even? b) (fast-multiply-iter a b 0))
+       (else (fast-multiply-iter a (- b 1) a)
+      )   
+  )
+)
+
+(fast-multiply 3 6)
