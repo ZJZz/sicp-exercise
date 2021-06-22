@@ -290,3 +290,15 @@
 ; (+ 2 1)
 ; 3
 ; way more easier !
+
+; 1.16
+
+(define (fast-exp-iter b n a)
+  ()  
+)
+
+(define (fast-exp b n)
+  (if (even? n) (fast-exp-iter b n 1)
+    (fast-exp-iter b n b)
+  )
+)
