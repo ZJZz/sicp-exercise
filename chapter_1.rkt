@@ -294,11 +294,14 @@
 ; 1.16
 
 (define (fast-exp-iter b n a)
-  ()  
+(if (= n 1) a
+  (fast-exp-iter b (/ n 2) (* a (square b)))
+)
 )
 
 (define (fast-exp b n)
-  (if (even? n) (fast-exp-iter b n 1)
-    (fast-exp-iter b n b)
-  )
+(cond ((= n 0) 1)
+      ((even? n) (fast-exp-iter b n 1))
+      (else (fast-exp-iter b (- n 1) b))   
+)
 )
