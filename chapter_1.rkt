@@ -325,22 +325,41 @@
 
 ; 1.18
 
-(define (fast-multiply-iter a b res)
- (display res)
- (display "\n")
- (cond ((= b 1) res)
-       ((even? b) (fast-multiply-iter a (halve b) (+ res (double a))))
-       (else (fast-multiply-iter a (halve (- b 1)) (+ res (double a) a)))
-       )
-)
+; this problem need notice a few points:
+; - can not simply apply double the result to compute, and halve the scale factor  
+; - the key is find the formula
+; a * b
+; b = 6 = 2 * 3
+; a a a a a a
+; {a a a} {a a a}
+; {3a} {3a} how to compute 3a with only double ? a + double a, 
+; {6a}
+; 
+; b = 12
+; a a a a a a a a a a a a
+; {a a a a a a} {a a a a a a}
+; {6a} {6a}
+; {12a}
+; may is not compute so quickly
+; a a a a a a a a a a a a 
+; {a a} {a a} {a a} {a a} {a a} {a a}
+; {2a} {2a} {2a} {2a} {2a} {2a}
+; {4a} {4a} {4a}
+; {8a} {4a}
+; a a a a a a
+; {2a} {2a} {2a}
+; {4a} {2a}
+;
+; a  6
+; 2a 3
+; 2a + 2 * 2a
+; 2a + 4a
+; need change a value too !  
 
-(define (fast-multiply a b)
-  (cond ((= b 0) 0)
-       ((= b 1) a)
-      ((even? b) (fast-multiply-iter a b 0))
-       (else (fast-multiply-iter a (- b 1) a)
-      )   
-  )
+(define (fast-multiply-iter a b res)
+  (if (= b 0) res
+  (fast-multiply-iter a (- b 2) (+ res (double a)))
+  )   
 )
 
 (fast-multiply 3 6)
