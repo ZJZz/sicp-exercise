@@ -340,7 +340,7 @@
 ; {a a a a a a} {a a a a a a}
 ; {6a} {6a}
 ; {12a}
-; may is not compute so quickly
+; maybe is not compute so quickly
 ; a a a a a a a a a a a a 
 ; {a a} {a a} {a a} {a a} {a a} {a a}
 ; {2a} {2a} {2a} {2a} {2a} {2a}
@@ -356,10 +356,21 @@
 ; 2a + 4a
 ; need change a value too !  
 
-(define (fast-multiply-iter a b res)
-  (if (= b 0) res
-  (fast-multiply-iter a (- b 2) (+ res (double a)))
-  )   
+(define (fast-multiply-iter a b left_part)
+  (cond ((= b 1) (+ left_part a))
+        ((even? b) (fast-multiply-iter (double a) (halve b) left_part))
+        (else (fast-multiply-iter a (- b 1) a))   
+  )
 )
 
-(fast-multiply 3 6)
+(define (fast-multiply a b)
+  (cond ((= b 0) 0)
+        ((= b 1) a)
+        (else (fast-multiply-iter a b 0))
+  )       
+)
+
+(fast-multiply 3 12)
+
+; 1.19
+
