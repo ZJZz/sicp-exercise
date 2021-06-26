@@ -373,4 +373,29 @@
 (fast-multiply 3 12)
 
 ; 1.19
+; F(1) = 1 F(0) = 0
+;
+; F(2) = F(1) + F(0), F(1) = F(1)
+;
+; F(3) = F(2) + F(1) = F(1) + F(0) + F(1), F(2) = F(1) + F(0)
+;
+; F(4) = F(3) + F(2) = F(2) + F(1) + F(2), F(3) = F(2) + F(1)
+;
+; F(5) = F(4) + F(3) = F(3) + F(2) + F(3), F(4) = F(3) + F(2)
+; consider every time the a and b is different from init   
 
+(define (fib n)
+  (fib-iter 1 0 0 1 n))
+(define (fib-iter a b p q count)
+  (cond ((= count 0) b)
+        ((even? count)
+         (fib-iter a
+                   b
+                   1      ; compute p'
+                   1      ; compute q'
+                   (/ count 2)))
+        (else (fib-iter (+ (* b q) (* a q) (* a p))
+                        (+ (* b p) (* a q))
+                        p
+                        q
+                        (- count 1)))))
