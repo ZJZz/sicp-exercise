@@ -375,20 +375,28 @@
 ; 1.19
 ; F(1) = 1 F(0) = 0
 ;
-; F(2) = F(1) + F(0), F(1) = F(1)
+; F(2) = F(1) + F(0) | F(1) = F(1)
 ;
-; F(3) = F(2) + F(1) = F(1) + F(0) + F(1), F(2) = F(1) + F(0)
+; F(3) = F(2) + F(1) = F(1) + F(0) + F(1) | F(2) = F(1) + F(0)
 ;
-; F(4) = F(3) + F(2) = F(2) + F(1) + F(2), F(3) = F(2) + F(1)
+; F(4) = F(3) + F(2) = F(2) + F(1) + F(2) | F(3) = F(2) + F(1) = F(1) + F(0) + F(1)
 ;
-; F(5) = F(4) + F(3) = F(3) + F(2) + F(3), F(4) = F(3) + F(2)
+; F(5) = F(4) + F(3) = F(3) + F(2) + F(3) | F(4) = F(3) + F(2)
+;
+; F(6) = F(5) + F(4) = F(3) + F(2) | F(5)
 ; consider every time the a and b is different from init
 
 ; after go through the code, there is some point worth to be noted
 ; when the count is even, only change p,q to p',q'
 ; when the count is odd, p,q keep same, only transform a,b
 ; the exercise is ask p' and q', so focus on how F(2) trans to F(4) 
-; by F(0) and F(1), F(4) trans to F(8) by F(3) and F(4) ... and so on.
+; by F(0) and F(1), F(4) trans to F(8) by F(3) and F(2),
+; F(3) to F(6) by F(2) and so on.
+;
+; When the count is odd, except the first time it use original p and q.
+; the rest time it apply p' and q'
+; To find the pattern, the key is know when apply p' and q', and what a and b is
+; in this time. 
 
 (define (fib n)
   (fib-iter 1 0 0 1 n))
