@@ -382,7 +382,13 @@
 ; F(4) = F(3) + F(2) = F(2) + F(1) + F(2), F(3) = F(2) + F(1)
 ;
 ; F(5) = F(4) + F(3) = F(3) + F(2) + F(3), F(4) = F(3) + F(2)
-; consider every time the a and b is different from init   
+; consider every time the a and b is different from init
+
+; after go through the code, there is some point worth to be noted
+; when the count is even, only change p,q to p',q'
+; when the count is odd, p,q keep same, only transform a,b
+; the exercise is ask p' and q', so focus on how F(2) trans to F(4) 
+; by F(0) and F(1), F(4) trans to F(8) by F(3) and F(4) ... and so on.
 
 (define (fib n)
   (fib-iter 1 0 0 1 n))
