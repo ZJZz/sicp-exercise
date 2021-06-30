@@ -396,20 +396,29 @@
 ; When the count is odd, except the first time it use original p and q.
 ; the rest time it apply p' and q'
 ; To find the pattern, the key is know when apply p' and q', and what a and b is
-; in this time. 
+; in this time.
+; 
+; I think my track is diverge from the right track. After check the solution on the 
+; http://community.schemewiki.org/?sicp-ex-1.19. The simplest way is just deduce the formula.
+; a' <- bq + aq + ap
+; b' <- bp + aq
+;
+; a'' <- b'q + a'q + a'p = (bp + aq)q + (bq + aq + ap)q + (bq + aq + ap)p = b(2pq + q^2) + a(2pq + q^2) + a(p^2 + q^2)
+; b'' <- b'p + a'q       = (bp + aq)p + (bq + aq + ap)q                   = b(p^2 + q^2) + a(2pq + q^2)
+
 
 (define (fib n)
-  (fib-iter 1 0 0 1 n))
+(fib-iter 1 0 0 1 n))
 (define (fib-iter a b p q count)
-  (cond ((= count 0) b)
-        ((even? count)
-         (fib-iter a
-                   b
-                   1      ; compute p'
-                   1      ; compute q'
-                   (/ count 2)))
-        (else (fib-iter (+ (* b q) (* a q) (* a p))
-                        (+ (* b p) (* a q))
-                        p
-                        q
-                        (- count 1)))))
+(cond ((= count 0) b)
+      ((even? count)
+       (fib-iter a
+                 b
+                 (+ (square p) (square q))
+                 (+ (* 2 (* p q)) (square q))      ; compute q'
+                 (/ count 2)))
+      (else (fib-iter (+ (* b q) (* a q) (* a p))
+                      (+ (* b p) (* a q))
+                      p
+                      q
+                      (- count 1)))))
