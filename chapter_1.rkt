@@ -383,7 +383,7 @@
 ;
 ; F(5) = F(4) + F(3) = F(3) + F(2) + F(3) | F(4) = F(3) + F(2)
 ;
-; F(6) = F(5) + F(4) = F(3) + F(2) | F(5)
+; F(6) = F(5) + F(4) = F(3) + F(2)        | F(5) = F(4) + F(3)
 ; consider every time the a and b is different from init
 
 ; after go through the code, there is some point worth to be noted
@@ -422,3 +422,26 @@
                       p
                       q
                       (- count 1)))))
+; 1.22
+
+(define (smallest-divisor n)
+  (find-divisor n 2))
+(define (find-divisor n test-divisor)
+  (cond ((> (square test-divisor) n) n)
+        ((divides? test-divisor n) test-divisor)
+        (else (find-divisor n (+ test-divisor 1)))))
+(define (divides? a b)
+  (= (remainder b a) 0))
+
+(define (prime? n)
+  (= n (smallest-divisor n)))
+
+
+(define (test-prime-iter current end count)
+  (if (prime? current) (count + 1)
+  (test-prime-iter (+ 2 current) end count))
+)
+
+(define (timing-range-prime start end)
+
+)
