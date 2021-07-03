@@ -464,3 +464,18 @@
   (if (odd? start) (iterate-range start end)
   (iterate-range (+ start 1) end))
 )
+
+; 1.23
+
+(define (smallest-divisor n)
+  (find-divisor n 2))
+
+(define (next-divisor n)
+  (if (= n 2) (3)
+  (+ n 2))
+)
+
+(define (find-divisor-next n test-divisor)
+  (cond ((> (square test-divisor) n) n)
+        ((divides? test-divisor n) test-divisor)
+        (else (find-divisor n (next-divisor test-divisor)))))
