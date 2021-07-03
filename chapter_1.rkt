@@ -436,12 +436,31 @@
 (define (prime? n)
   (= n (smallest-divisor n)))
 
+(define (timed-prime-test n)
+  (newline)
+  (display n)
+  (start-prime-test n (current-inexact-milliseconds))
+)
 
-(define (test-prime-iter current end count)
-  (if (prime? current) (count + 1)
-  (test-prime-iter (+ 2 current) end count))
+(define (start-prime-test n start-time)
+  (when (prime? n)
+      (report-prime (- (current-inexact-milliseconds) start-time)))
+)
+
+(define (report-prime elapsed-time)
+  (display " *** ")
+  (display elapsed-time)
+)
+
+(define (iterate-range current end)
+  (when (< current end)
+    (timed-prime-test current)
+    (iterate-range (+ current 2) end)
+  )
+  
 )
 
 (define (timing-range-prime start end)
-
+  (if (odd? start) (iterate-range start end)
+  (iterate-range (+ start 1) end))
 )
