@@ -560,4 +560,37 @@
 ; the formula in the book is another unregulated changed form. list 
 ; this TODO for now.
 
+; 1.33
 
+(define (accumulate-recur combiner base term a next b)
+  (if (> a b) base
+    (combiner (term a) (accumulate-recur combiner base term (next a) next b))
+  )
+)
+
+(define (accumulate-iter combiner base term a next b)
+  (define (iter a result)
+    (if (> a b) result
+        (iter (next a) (combiner result (term a)))
+    )
+  )
+  (iter a base)
+)
+
+;(define (accumulate combiner null-value term a next b)
+; (accumulate-recur combiner null-value term a next b) 
+;)
+
+(define (accumulate combiner null-value term a next b)
+ (accumulate-iter combiner null-value term a next b) 
+)
+
+(define (add a b)
+  (+ a b)
+)
+
+(define (product a b)
+  (* a b)
+)
+
+(accumulate product 1 identity 1 inc 5)
