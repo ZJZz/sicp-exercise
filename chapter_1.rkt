@@ -514,4 +514,23 @@
   (display " *** ")
   (display elapsed-time))
 
-; 1.25
+; TODO:1.25
+; TODO:1.26
+; TODO:1.27
+; TODO:1.28
+
+; 1.29
+; I'm not sure how Simpson's Rule y_n factor change. Because 1, 2, 4 is change
+; unregulated. And where is k come from ?
+; oh, k is just the subscript. But how to determin the factor ?
+
+
+; 1.30
+(define (sum term a next b)
+  (define (iter a result)
+    (if (> a b)
+        result
+        (iter (next a) (+ result (term a)))))
+  (iter a 0)
+)
+
