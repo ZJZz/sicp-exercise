@@ -560,7 +560,7 @@
 ; the formula in the book is another unregulated changed form. list 
 ; this TODO for now.
 
-; 1.33
+; 1.32
 
 (define (accumulate-recur combiner base term a next b)
   (if (> a b) base
@@ -594,3 +594,42 @@
 )
 
 (accumulate product 1 identity 1 inc 5)
+
+; 1.33
+
+(define (filtered-accumulate-recur combiner base term a next b filter)
+(if  (> a b) base
+     (if (filter a) (combiner (term a) (filtered-accumulate-recur combiner base term (next a) next b filter))
+         (filtered-accumulate-recur combiner base term (next a) next b filter)
+     )
+)
+)
+
+(define (filtered-accumulate-iter combiner base term a next b filter)
+(define (iter a result filter)
+  (if (> a b) result
+      (if (filter a) (iter (next a) (combiner result (term a)) filter)
+          (iter (next a) result filter))
+      
+  )
+)
+(iter a base filter)
+)
+
+(define (filtered-accumulate combiner null-value term a next b filter)
+(filtered-accumulate-iter combiner null-value term a next b filter) 
+)
+
+(define (gcd a b)
+(if (= b 0)
+    a
+    (gcd b (remainder a b)))
+)
+
+(define (my-filter? i)
+(and (= (gcd i 7) 1) (< i 7))
+)
+
+(filtered-accumulate add 0 square 2 inc 10 prime?)
+
+(filtered-accumulate product 1 identity 1 inc 10 my-filter?)
