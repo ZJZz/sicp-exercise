@@ -633,3 +633,16 @@
 (filtered-accumulate add 0 square 2 inc 10 prime?)
 
 (filtered-accumulate product 1 identity 1 inc 10 my-filter?)
+
+; 1.34
+
+(define (f g)
+  (g 2)
+)
+
+; supposed to be error,
+(f f) -> (f 2) -> (2, 2) 
+
+; after validate in the IDE
+; (f, f) is same error with (2, 2) 
+
