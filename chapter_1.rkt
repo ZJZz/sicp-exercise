@@ -696,3 +696,15 @@
 ; output is 1.(377/610) which is close 1.61803
 
 ; 1.36
+
+(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) k)
+
+; the formula itself is recursive, so think recursive first.
+; the key part is like this:
+; (/ N_i (+ D_i ( return by next recursive )))
+
+(define (cont-frac-recur N D k)
+  ( if (= k 0) 0
+  (/ N (+ D (cont-frac-recur N D (- k 1))))  
+  )
+)
