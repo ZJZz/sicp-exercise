@@ -695,16 +695,64 @@
 (fixed-point (lambda (x) (/ (+ x 1) x)) 2)
 ; output is 1.(377/610) which is close 1.61803
 
-; 1.36
-
-(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) k)
+; 1.37
 
 ; the formula itself is recursive, so think recursive first.
 ; the key part is like this:
 ; (/ N_i (+ D_i ( return by next recursive )))
 
-(define (cont-frac-recur N D k)
-  ( if (= k 0) 0
-  (/ N (+ D (cont-frac-recur N D (- k 1))))  
+(define (cont-frac-recur N D i)
+  (if (= i 0) 0
+    (/ (N i ) (+ (D i) (cont-frac-recur N D (- i 1))))
   )
 )
+
+(define (cont-frac-iter N D i result)
+  (if (= i 0) result
+  (cont-frac-iter N D (- i 1) (/ (N i) (+ (D i) result) ))
+  )   
+)
+
+(define (cont-frac N D i)
+  (cont-frac-recur N D i)
+)
+
+(define (cont-frac-i N D i)
+  (cont-frac-iter N D i 0)
+)
+
+(cont-frac (lambda (i) 1.0) (lambda (i) 1.0) 2)
+
+(cont-frac-i (lambda (i) 1.0) (lambda (i) 1.0) 2)
+
+; 1.38
+; this problem trun out to be find pattern of D_i
+; little tired of computer book become math exercise book -_-
+; after read the solution http://community.schemewiki.org/?sicp-ex-1.38
+; it should consider about reminder to find the pattern
+
+(define (e-euler k) 
+   (+ 2.0 (cont-frac (lambda (i) 1) 
+                     (lambda (i) 
+                       (if (= (remainder i 3) 2) 
+                           (/ (+ i 1) 1.5) 
+                           1)) 
+                     k)
+    )
+)
+
+; 1.39
+; same as 1.38
+; I think the D_i is odd and N_i only first is linear, the rest are square
+
+(define (tan-cf-my x k)
+  (cont-frac (lambda (i) (if (= i 1) x (- (square x)))) 
+             (lambda (i) (- (* 2 i) 1)) 
+              k)
+)
+
+; notice that minus should put on numerator. Other wise the result is different with put on denominator
+
+
+
+
