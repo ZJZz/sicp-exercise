@@ -752,7 +752,66 @@
 )
 
 ; notice that minus should put on numerator. Other wise the result is different with put on denominator
+; 1.40 
 
+(define (newton-transform g)
+  (lambda (x)
+    (- x (/ (g x) ((deriv g) x)))))
 
+(define (newtons-method g guess)
+  (fixed-point (newton-transform g) guess))
 
+(define (deriv g)
+  (lambda (x)
+    (/ (- (g (+ x dx)) (g x))
+       dx)))
 
+(define dx 0.00001)
+
+; just give a cubic formula ?
+(define (cubic a b c)
+  (+ (cube x) (* a (square x)) (* b x) c)
+)
+; is just so ???
+; No, after see the solution http://community.schemewiki.org/?sicp-ex-1.40
+; too young, too naive
+; the above of course give a x^3 + ax^2 + bx + c
+; it not return a function
+; but it can not apply in the (newton-transform g) -> (g x) 
+; the lambda function come to help fit x in the cubic
+
+(define (cubic a b c)
+  (lambda (x)
+    ( + (cube x) (* a (square x)) (* b x) c)
+  )
+)
+
+; only in this way, cubic return a procdure
+
+; 1.41
+(define (inc x)
+  (+ x 1))
+
+(define (double f)
+  (lambda (x) (f (f x)))
+)
+
+((double inc) 1)
+
+; 1.42
+
+(define (compose f g)
+  (lambda (x) (f (g x)))
+)
+
+((compose square inc) 6)
+
+; 1.43
+
+(define (repeated f n) 
+    (if (= n 1) f
+      (compose f (repeated f (- n 1))) 
+    )
+)
+
+((repeated square 3) 5)
