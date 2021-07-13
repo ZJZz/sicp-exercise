@@ -815,3 +815,25 @@
 )
 
 ((repeated square 3) 5)
+
+; 1.44
+
+(define (smooth f)
+(lambda (x) (/ (+ (f (- x dx)) (f x) (f (+ x dx))) 3))
+)
+
+((repeated (smooth inc) 2) 5)
+
+; is just that ? 
+; after check the solution, yeah, just simple like this
+
+; 1.45
+
+(define (fixed-point-of-transform g transform guess)
+  (fixed-point (transform g) guess)
+)
+
+
+(define (find-root n x)
+  (fixed-point-of-transform (lambda (y) (/ x (expt y (- n 1)))) (repeated average-damp n) 1.0)
+)
