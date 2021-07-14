@@ -837,3 +837,32 @@
 (define (find-root n x)
   (fixed-point-of-transform (lambda (y) (/ x (expt y (- n 1)))) (repeated average-damp n) 1.0)
 )
+
+; 1.46
+
+(define (iterative-improve good_enough next_guess)
+  (lambda (x): (
+    (if (good_enough x) x
+      (iterative-improve good_enough (next_guess x))
+    ))
+  )
+)
+
+(define (square x) (* x x))
+
+(define (good-enough? guess x)
+(< (abs (- (square guess) x)) 0.001))
+
+(define (average x y)
+(/ (+ x y) 2))
+
+(define (improve guess x)
+(average guess (/ x guess)))
+
+(iterative-improve good_enough? )
+
+; a litle confused
+; the argument of iterative-improve is procedures
+; but what these procedures's parameter count ?
+; 1 or 2 ?
+
