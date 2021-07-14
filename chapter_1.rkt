@@ -843,13 +843,25 @@
 ; exercise says iterative-improve should return as its value a procedure that 
 ; takes a guess as argument and keeps improving the guess until it is good enough
 ; I'm not sure only first guess as argument, should also specify which value you want
-; for example square. So lambda take (x, y) as parameter. x as guess value, y as square value 
+; for example square. So lambda take (x, y) as parameter. x as guess value, y as square value
+
+; can not use two variable in lambda, syntax error 
+
+(define (same)
+  (lambda (x) x)
+)
+
+; how define a procedure that don't need argument ? ? ?
+; must return a procedure 
+; value already computed in this form
 
 (define (iterative-improve good_enough next_guess)
-(lambda (x) (
-  (if (good_enough x) identity 
-    ((iterative-improve good_enough next_guess) x)
-  )))
+  (lambda (x) (
+    (if (good_enough x) (same x)
+      ((iterative-improve good_enough next_guess) (next_guess x))
+    )
+  )
+)
 )
 
 (define (square x) (* x x))
@@ -859,6 +871,8 @@
   x)
 )
 
+
+
 (define (good-enough? guess)
 (< (abs (- (square guess) 9)) 0.001))
 
@@ -866,7 +880,10 @@
 (/ (+ x y) 2))
 
 (define (improve guess)
-(average guess (/ 9 guess)))
+  (average guess (/ 9 guess))
+)
 
 ((iterative-improve good-enough? improve) 1.0)
+
+
 
