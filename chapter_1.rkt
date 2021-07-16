@@ -851,19 +851,6 @@
   (lambda (x) x)
 )
 
-; how define a procedure that don't need argument ? ? ?
-; must return a procedure 
-; value already computed in this form
-
-(define (iterative-improve good_enough next_guess)
-  (lambda (x) (
-    (if (good_enough x) (same x)
-      ((iterative-improve good_enough next_guess) (next_guess x))
-    )
-  )
-)
-)
-
 (define (square x) (* x x))
 
 (define (abs x)
@@ -883,7 +870,71 @@
   (average guess (/ 9 guess))
 )
 
-((iterative-improve good-enough? improve) 1.0)
 
 
+; how define a procedure that don't need argument ? ? ?
+; must return a procedure 
+; value already computed in this form
 
+(define (iterative-improve good_enough next_guess)
+  (lambda (x) (
+    (if (good_enough x) (same x)
+      ((iterative-improve good_enough next_guess) (next_guess x))
+    )
+  )
+)
+)
+
+; ((iterative-improve good-enough? improve) 1.0)
+
+; after check the solution, the above code has extra parentheses in lambda 
+
+(define (iterative-improve good_enough next_guess)
+  (lambda (x) 
+    (if (good_enough x) (same x)
+      ((iterative-improve good_enough next_guess) (next_guess x))
+    )
+  )
+)
+
+; now it works
+
+(define tolerance 0.00001)
+
+(define (close-enough? v1 v2)
+  (< (abs (- v1 v2)) tolerance)
+)
+
+(define (try guess)
+  (let ((next (cos guess)))
+       (if (close-enough? guess next) next
+           (try next)
+       )
+  )
+)
+
+((iterative-improve close-enough? try) 1.0)
+
+(define tolerance 0.00001)
+
+(define (close-enough? v1)
+  (< (abs (- v1 (cos v1))) tolerance)
+)
+
+(define (try guess)
+  (let ((next (cos guess)))
+       (if (close-enough? guess) next
+           (try next)
+       )
+  )
+)
+
+(define (iterative-improve good_enough next_guess)
+  (lambda (x) 
+    (if (good_enough x) x
+      ((iterative-improve good_enough next_guess) (next_guess x))
+    )
+  )
+)
+
+((iterative-improve close-enough? try) 1.0)
