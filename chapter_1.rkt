@@ -846,19 +846,12 @@
 ; for example square. So lambda take (x, y) as parameter. x as guess value, y as square value
 
 ; can not use two variable in lambda, syntax error 
-
-(define (same)
-  (lambda (x) x)
-)
-
 (define (square x) (* x x))
 
 (define (abs x)
 (if (< x 0) (- x)
   x)
 )
-
-
 
 (define (good-enough? guess)
 (< (abs (- (square guess) 9)) 0.001))
@@ -869,8 +862,6 @@
 (define (improve guess)
   (average guess (/ 9 guess))
 )
-
-
 
 ; how define a procedure that don't need argument ? ? ?
 ; must return a procedure 
@@ -938,3 +929,19 @@
 )
 
 ((iterative-improve close-enough? try) 1.0)
+
+; now need pass one argument to the good enough and improve
+
+(define (sqrt-iter-improve x)
+  ((iterative-improve (lambda (y) (< (abs (- (square y) x)) 0.001)) (lambda (y) (average guess (/ x y)))) 1.0) 
+)
+
+(define (fix-point-iter-improve f)
+  ((iterative-improve (lambda (y) (< (abs (- y (f y))) tolerance)) (lambda (y) (f y))) 1.0) 
+)
+
+; fix-point-iter-improve improve argument don't need lambda
+
+(define (fix-point-iter-improve f)
+  ((iterative-improve (lambda (y) (< (abs (- y (f y))) tolerance)) f) 1.0) 
+)
